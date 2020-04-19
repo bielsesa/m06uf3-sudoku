@@ -22,7 +22,7 @@ const indexApp = new Vue({
             this.playerTimes = JSON.parse(playerTimesJSON);
             console.log(`Player times: ${this.playerTimes}`);
 
-            this.playerTimes.sort((a, b) => parseFloat(b) - parseFloat(a));
+            this.playerTimes.sort((a, b) => parseFloat(a) - parseFloat(b));
             // retorna les tres millors puntuacions
             this.playerTimes = this.playerTimes.slice(0, 4);
             console.log(`Times JSON (després d'ordre i slice):${JSON.stringify(this.playerTimes)}`);

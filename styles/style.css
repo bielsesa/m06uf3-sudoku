@@ -171,3 +171,9 @@ a {
   border: dotted 5px whitesmoke;
   color: white;
 }
+
+.timer {
+  margin: 10px;
+  color: black;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}

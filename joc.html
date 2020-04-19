@@ -34,6 +34,11 @@
       </div>
 
       <transition name="fade">
+        <p class="timer" v-if="isGameStarted && !showAnswer">
+          Temps: {{ time }} s
+        </p>
+      </transition>
+      <transition name="fade">
         <div class="grid-sudoku" v-if="isGameStarted && !showAnswer">
           <div v-for="row in sudokuMatrix" class="grid-row">
             <div v-for="cell in row" class="grid-cell">
@@ -53,6 +58,12 @@
       <transition name="fade">
         <div v-if="showAnswer" class="answer">
           <img v-bind:src="answerImage" class="answer-image" />
+        </div>
+      </transition>
+
+      <transition name="fade">
+        <div v-if="isGameFinished">
+          <p>Ben fet! Has completat aquest sudoku en {{ time }} segons.</p>
         </div>
       </transition>
     </div>

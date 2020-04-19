@@ -10,15 +10,15 @@ const sudokuApp = new Vue({
         answerImage: '',
         isGameStarted: false,
         showAnswer: false,
+        isGameFinished: false,
         isIndexdbSupported: true,
         time: 0,
+        timeInterval: undefined,
     },
 
     methods: {
         async initializeGame() {
             // lectura del sudoku random de IndexedDB
-            console.log('Abans de recullRandomSudoku');
-            // console.log('Després de recullRandomSudoku:');
             defaultSudokuMatrix = await indexeddb.recullRandomSudoku();
             
             // Empty two random cells per row
@@ -32,9 +32,15 @@ const sudokuApp = new Vue({
             this.sudokuMatrix = defaultSudokuMatrix;
             this.initializeGameText = 'Reiniciar';
             this.isGameStarted = true;
+            this.isGameFinished = false;
 
             // comença el timer
             console.log('comença el timer');
+            time = 0;
+            this.timeInterval = setInterval(() => {
+                this.time += 1;
+                // cada segon actualitzar temps
+            }, 1000);
         },
 
         evaluateGame() {
@@ -58,7 +64,18 @@ const sudokuApp = new Vue({
 
                 setTimeout(() => {
                     this.showAnswer = false;
-                    this.isGameStarted = true;
+                    this.isGameFinished = true;
+                    clearInterval(this.timeInterval);
+
+                    //guarda el temps en localstorage
+                    const playerTimes = JSON.parse(window.localStorage.getItem('playerTimes'));
+                    console.log('Player times:');
+                    console.log(playerTimes);
+                    playerTimes.push(this.time);
+                    window.localStorage.setItem('playerTimes', JSON.stringify(playerTimes));
+                    this.time = 0;
+                    console.log('Player times (updated):');
+                    console.log(playerTimes);
                 }, 2000);
             } else {
                 this.answerImage = `img/fail/${answImgRand}.gif`;

@@ -19,8 +19,8 @@
       <div v-if="isIndexdbSupported">
         <div class="grid-player-times">
           <h3>Millors puntuacions</h3>
-          <div id="grid-times" v-for="(time, index) in playerTimes">
-            <p>{{ index }} - {{ time }}</p>
+          <div id="grid-times" v-for="time in playerTimes">
+            <p>{{ time }} segons</p>
           </div>
         </div>
 
