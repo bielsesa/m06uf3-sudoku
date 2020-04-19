@@ -1,22 +1,47 @@
-window.onload = () => {
-    const storage = window.localStorage;
-    let playerTimes = storage.getItem('puntuacions');
-    const table = document.getElementById('player-times'); // potser es poden guardar com a JSON al localStorage
-    console.log(`Taula: ${table.id}`);
+if (!('indexedDB' in window)) {
+    console.log('Aquest navegador no suporta IndexedDB');
+} else {
+}
 
-    if (playerTimes != null) {
-        playerTimes = playerTimes.split(';');
-        playerTimes.sort((a, b) => parseFloat(a) > parseFloat(b));
+const indexed = new DbHelper();
+indexed.comprovaExistsSinoInicialitza();
 
-        playerTimes.forEach(item => {
-            const row = table.insertRow(0);
-            const cell = row.insertCell(0);
-            cell.innerText = item;
-            console.log(`Item: ${item}`);
-        });
-    }
+const indexApp = new Vue({
+    el: '#app-index',
+    created() {
+        // comprovació de compatibilitat amb IndexedDB
+        // if (!('indexedDB' in window)) {
+        //     console.log('Aquest navegador no suporta IndexedDB');
+        //     this.isIndexdbSupported = false;
+        //     return;
+        // }
 
-    // const vm = new Vue({
-    //     // options
-    // });
-};
+        // lectura de les dades de temps (si existeixen)
+        const playerTimesJSON = window.localStorage.getItem('playerTimes');
+
+        if (playerTimesJSON != null && playerTimesJSON !== '') {
+            this.playerTimes = JSON.parse(playerTimesJSON);
+            console.log(`Player times: ${this.playerTimes}`);
+
+            this.playerTimes.sort((a, b) => parseFloat(b) - parseFloat(a));
+            // retorna les tres millors puntuacions
+            this.playerTimes = this.playerTimes.slice(0, 4);
+            console.log(`Times JSON (després d'ordre i slice):${JSON.stringify(this.playerTimes)}`);
+        }
+
+        // inicialitza IndexedDB
+
+        // codi per si es vol utilitzar indexedDB en navegadors antics
+        // const DbHelper = new DbHelper();
+        // DbHelper.comprovaExistsSinoInicialitza();
+    },
+    data: {
+        isIndexdbSupported: true,
+        playerTimes: [],
+    },
+    methods: {
+        carregarJoc() {
+            document.location = 'joc.html';
+        },
+    },
+});
