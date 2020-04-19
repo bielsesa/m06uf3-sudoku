@@ -1,4 +1,5 @@
-/* eslint-disable no-plusplus */
+const indexeddb = new DbHelper();
+
 const sudokuApp = new Vue({
     el: '#app-sudoku',
 
@@ -14,113 +15,12 @@ const sudokuApp = new Vue({
     },
 
     methods: {
-        initializeGame() {
+        async initializeGame() {
             // lectura del sudoku random de IndexedDB
-            // const DbHelper = new DbHelper();
-
-            // const defaultSudokuMatrix = DbHelper.recullRandomSudoku();
-            const defaultSudokuMatrix = [
-                [
-                    { num: 5 },
-                    { num: 3 },
-                    { num: 4 },
-                    { num: 6 },
-                    { num: 7 },
-                    { num: 8 },
-                    { num: 9 },
-                    { num: 1 },
-                    { num: 2 },
-                ],
-                [
-                    { num: 6 },
-                    { num: 7 },
-                    { num: 2 },
-                    { num: 1 },
-                    { num: 9 },
-                    { num: 5 },
-                    { num: 3 },
-                    { num: 4 },
-                    { num: 8 },
-                ],
-                [
-                    { num: 1 },
-                    { num: 9 },
-                    { num: 8 },
-                    { num: 3 },
-                    { num: 4 },
-                    { num: 2 },
-                    { num: 5 },
-                    { num: 6 },
-                    { num: 7 },
-                ],
-                [
-                    { num: 8 },
-                    { num: 5 },
-                    { num: 9 },
-                    { num: 7 },
-                    { num: 6 },
-                    { num: 1 },
-                    { num: 4 },
-                    { num: 2 },
-                    { num: 3 },
-                ],
-                [
-                    { num: 4 },
-                    { num: 2 },
-                    { num: 6 },
-                    { num: 8 },
-                    { num: 5 },
-                    { num: 3 },
-                    { num: 7 },
-                    { num: 9 },
-                    { num: 1 },
-                ],
-                [
-                    { num: 7 },
-                    { num: 1 },
-                    { num: 3 },
-                    { num: 9 },
-                    { num: 2 },
-                    { num: 4 },
-                    { num: 8 },
-                    { num: 5 },
-                    { num: 6 },
-                ],
-                [
-                    { num: 9 },
-                    { num: 6 },
-                    { num: 1 },
-                    { num: 5 },
-                    { num: 3 },
-                    { num: 7 },
-                    { num: 2 },
-                    { num: 8 },
-                    { num: 4 },
-                ],
-                [
-                    { num: 2 },
-                    { num: 8 },
-                    { num: 7 },
-                    { num: 4 },
-                    { num: 1 },
-                    { num: 9 },
-                    { num: 6 },
-                    { num: 3 },
-                    { num: 5 },
-                ],
-                [
-                    { num: 3 },
-                    { num: 4 },
-                    { num: 5 },
-                    { num: 2 },
-                    { num: 8 },
-                    { num: 6 },
-                    { num: 1 },
-                    { num: 7 },
-                    { num: 9 },
-                ],
-            ];
-
+            console.log('Abans de recullRandomSudoku');
+            // console.log('Després de recullRandomSudoku:');
+            defaultSudokuMatrix = await indexeddb.recullRandomSudoku();
+            
             // Empty two random cells per row
             for (let i = 0; i < defaultSudokuMatrix.length; ++i) {
                 for (let k = 0; k < 2; ++k) {
@@ -134,6 +34,7 @@ const sudokuApp = new Vue({
             this.isGameStarted = true;
 
             // comença el timer
+            console.log('comença el timer');
         },
 
         evaluateGame() {

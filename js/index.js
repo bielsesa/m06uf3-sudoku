@@ -1,6 +1,5 @@
 if (!('indexedDB' in window)) {
     console.log('Aquest navegador no suporta IndexedDB');
-} else {
 }
 
 const indexed = new DbHelper();
@@ -28,12 +27,6 @@ const indexApp = new Vue({
             this.playerTimes = this.playerTimes.slice(0, 4);
             console.log(`Times JSON (després d'ordre i slice):${JSON.stringify(this.playerTimes)}`);
         }
-
-        // inicialitza IndexedDB
-
-        // codi per si es vol utilitzar indexedDB en navegadors antics
-        // const DbHelper = new DbHelper();
-        // DbHelper.comprovaExistsSinoInicialitza();
     },
     data: {
         isIndexdbSupported: true,
