@@ -1,55 +1,55 @@
 <!DOCTYPE html>
 <html lang="ca">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Inici - Sudoku Master</title>
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Dosis&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>Inici - Sudoku Master</title>
-  <link rel="stylesheet" type="text/css" href="styles/style.css" />
-  <link href="https://fonts.googleapis.com/css?family=Dosis&display=swap" rel="stylesheet" />
-</head>
+  <body>
+    <header>
+      <h1>SUDOKU MASTER</h1>
+    </header>
+    <div id="app"></div>
+    <div id="app-index">
+      <div v-if="isIndexdbSupported">
+        <div class="grid-player-times">
+          <h3 v-if="times">Millors puntuacions</h3>
+          <h3 v-else>Encara no hi ha puntuacions!</h3>
+          <div id="grid-times" v-for="time in playerTimes">
+            <p>{{ time }} segons</p>
+          </div>
+        </div>
 
-<body>
-  <header>
-    <h1>SUDOKU MASTER</h1>
-  </header>
-  <div id="app"></div>
-  <div id="app-index">
-    <div v-if="isIndexdbSupported">
-      <div class="grid-player-times">
-        <h3>Millors puntuacions</h3>
-        <div id="grid-times" v-for="time in playerTimes">
-          <p>{{ time }} segons</p>
+        <div class="buttons-container">
+          <button class="button" v-on:click="carregarJoc()">
+            <span>Jugar</span>
+          </button>
         </div>
       </div>
 
-      <div class="buttons-container">
-        <button class="button" v-on:click="carregarJoc()">
-          <span>Jugar</span>
-        </button>
+      <div v-else>
+        <p>
+          El teu navegador no suporta
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API"
+            >IndexedDB</a
+          >, i aquesta aplicació no pot funcionar sense ella.<br />
+          Actualitza el teu navegador o descarrega un altre que
+          <a href="https://caniuse.com/#search=indexeddb">sigui compatible</a>!
+        </p>
       </div>
+
+      <script src="jslibs/vue.js"></script>
+      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+      <script src="js/routing.js"></script>
+      <script src="js/dbhelper.js"></script>
+      <script src="js/index.js"></script>
     </div>
-
-    <div v-else>
-      <p>
-        El teu navegador no suporta
-        <a href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API">IndexedDB</a>, i aquesta aplicació no
-        pot funcionar sense ella.<br />
-        Actualitza el teu navegador o descarrega un altre que
-        <a href="https://caniuse.com/#search=indexeddb">sigui compatible</a>!
-      </p>
-    </div>
-
-
-
-
-
-    <script src="jslibs/vue.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="js/routing.js"></script>
-    <script src="js/dbhelper.js"></script>
-    <script src="js/index.js"></script>
-  </div>
-</body>
-
+  </body>
 </html>
